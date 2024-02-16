@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard - Chat de Trivia</title>
+    <!-- Agrega los estilos de Tailwind CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <!-- Agrega Font Awesome para el icono del menú -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" rel="stylesheet">
+</head>
+<body class="bg-gray-100 h-screen">
+    <!-- Barra de navegación vertical -->
+    <div id="sidebar" class="bg-gray-800 text-white h-full w-1/5 fixed top-0 left-0 py-4 px-2 transition-all duration-300">
+        <div class="flex justify-between items-center mb-4">
+            <h1 class="text-xl font-bold">Chat de Trivia</h1>
+            <!-- Botón de menú para desplegar/ocultar la barra lateral -->
+            <button id="toggleSidebar-close" class="text-white focus:outline-none">
+                <i class="fas fa-bars"></i>
+            </button>
+        </div>
+        <ul>
+            <li class="mb-2">
+                <a href="#" class="block px-4 py-2 rounded hover:bg-gray-700 active">Preguntas</a>
+            </li>
+            <li class="mb-2">
+                <a href="#" class="block px-4 py-2 rounded hover:bg-gray-700">Partidas</a>
+            </li>
+            <li class="mb-2">
+                <a href="#" class="block px-4 py-2 rounded hover:bg-gray-700">Usuarios</a>
+            </li>
+            <li class="mb-2">
+                <a href="#" class="block px-4 py-2 rounded hover:bg-gray-700">Puntuaciones</a>
+            </li>
+        </ul>
+    </div>
+
+    <!-- Contenido principal -->
+    <div class="px-8 w-full h-screen flex flex-row">
+        <div id="sidebar-false" class="w-1/5 h-screen"></div>
+        <div class="flex-1 flex flex-row">
+            <div id="navbar" class="py-4 px-4 h-screen hidden">
+                <button id="toggleSidebar-open" class="text-gray-800 focus:outline-none ">
+                    <i class="fas fa-bars"></i>
+                </button>
+            </div>
+            <section class="py-4 w-full">
+                <div class="w-full h-16 flex flex-row justify-between items-center">
+                    <div class="py-2 px-4">
+                        <h2 class="block text-2xl font-bold mb-4">Preguntas</h2>
+                    </div>
+                    <div class="my-2">
+                        <input placeholder="Buscar pregunta .." class="bg-gray-200 text-gray-700 border border-gray-300 rounded-lg py-2 px-4 focus:outline-none focus:border-blue-500 w-full" />
+                    </div>
+                    <button id="btnAgregarPregunta" class="py-2 px-4 rounded-xl bg-gray-800 text-white">
+                        Agregar Pregunta
+                    </button>
+                </div>
+                <div class="overflow-x-auto mt-6">
+                    <table class="table-auto border-collapse w-full mb-4">
+                        <thead class="sticky top-0 ">
+                            <tr>
+                                <th class="border px-4 py-2">N°</th>
+                                <th class="border px-4 py-2">Nombre</th>
+                                <th class="border px-4 py-2">Respuesta</th>
+                                <th class="border px-4 py-2">Imagen</th>
+                                <th class="border px-4 py-2">Fecha de Creación</th>
+                            </tr>
+                        </thead>
+                        <tbody class="tabla-scroll">
+                            <% data.forEach(function(item, indice) { %>
+                                <tr>
+                                    <td class="border px-4 py-2"><%= indice+1%></td>
+                                    <td class="border px-4 py-2"><%= item.nombrePregunta %></td>
+                                    <td class="border px-4 py-2"><%= item.respuesta %></td>
+                                    <td class="border px-4 py-2"><img src="<%= item.imagen %>" alt="Imagen" class="w-16 h-16"></td>
+                                    <td class="border px-4 py-2"><%= item.fechaCreacion %></td>
+                                </tr>
+                            <% }); %>
+                        </tbody>
+                    </table>
+                </div>
+            </section>
+        </div>
+                    <!-- Modal para agregar pregunta -->
+        <div id="modalAgregarPregunta"
+            class="hidden fixed top-0 left-0 w-full h-full bg-gray-900 bg-opacity-50 flex justify-center items-center">
+            <div class="bg-white p-8 rounded-lg w-1/2">
+                <h2 class="text-xl font-bold mb-4">Agregar Pregunta</h2>
+                <form method="POST" action="/save-question" id="saveQuestionForm">
+                    <div class="mb-4">
+                        <label for="nombrePregunta" class="block text-gray-700 font-bold mb-2">Nombre de la pregunta:</label>
+                        <input type="text" id="nombrePregunta" name="nombrePregunta"
+            class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" required>
+                    </div>
+                    <div class="mb-4">
+                        <label for="respuesta" class="block text-gray-700 font-bold mb-2">Respuesta:</label>
+                        <input type="text" id="respuesta" name="respuesta"
+            class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" required>
+                    </div>
+                    <div class="mb-4">
+                        <label for="imagen" class="block text-gray-700 font-bold mb-2">Enlace de la imagen:</label>
+                        <input type="text" id="imagen" name="imagen"
+            class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" required>
+                    </div>
+                    <button type="submit"
+                        class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">Guardar</button>
+                </form>
+            </div>
+        </div>
+    </div>
+    <!-- Mensaje flotante -->
+    <% if (typeof exito !== 'undefined') { %>
+        <div class="fixed bottom-0 left-0 w-full bg-green-500 text-white text-center py-2">
+            <% if (exito === 'true') { %>
+                La data se guardó correctamente.
+            <% } else { %>
+                Hubo un error al guardar la data.
+            <% } %>
+        </div>
+    <% } %>
+
+    <!-- Agrega Font Awesome para el icono del menú -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/js/all.min.js"></script>
+
+    <!-- Script para controlar el despliegue/ocultamiento de la barra lateral -->
+    <script>
+        document.getElementById('toggleSidebar-close').addEventListener('click', function() {
+            const sidebar = document.getElementById('sidebar');
+            const sidebarFalse = document.getElementById('sidebar-false');
+            const toggleOpen = document.getElementById('toggleSidebar-open');
+            const navbar = document.getElementById('navbar');
+
+            sidebar.classList.toggle('hidden'); // Cambia la visibilidad de la barra lateral al hacer clic en el botón de menú
+            sidebarFalse.classList.toggle('hidden');
+            toggleOpen.classList.remove('hidden');
+            navbar.classList.remove('hidden');
+        });
+        document.getElementById('toggleSidebar-open').addEventListener('click', function() {
+            const sidebar = document.getElementById('sidebar');
+            const toggleOpen = document.getElementById('toggleSidebar-open');
+            const sidebarFalse = document.getElementById('sidebar-false');
+            const navbar = document.getElementById('navbar');
+
+            sidebar.classList.remove('hidden') // Cambia la visibilidad de la barra lateral al hacer clic en el botón de menú
+            sidebarFalse.classList.remove('hidden')
+            toggleOpen.classList.toggle('hidden');       
+            navbar.classList.toggle('hidden')
+
+        });
+    </script>
+    <script>
+        
+        // Mostrar modal al hacer clic en el botón "Agregar Pregunta"
+        document.getElementById('btnAgregarPregunta').addEventListener('click', function() {
+            const modalAgregarPregunta = document.getElementById('modalAgregarPregunta');
+            modalAgregarPregunta.classList.remove('hidden'); // Mostrar el modal
+        });
+
+        document.getElementById('saveQuestionForm').addEventListener('submit',function () {
+            const modalAgregarPregunta = document.getElementById('modalAgregarPregunta');
+            modalAgregarPregunta.classList.toggle('hidden');
+        })
+</script>
+<style>
+            .tabla-scroll {
+            max-height: 400px; /* Altura máxima del cuerpo de la tabla */
+            overflow-y: auto; /* Habilitar scroll vertical si la tabla es demasiado grande */
+        }
+</style>
+</body>
+</html>

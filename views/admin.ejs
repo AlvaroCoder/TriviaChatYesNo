@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Panel</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+
+</head>
+<body>
+    <div id="alert" class="hidden bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative"></div>
+    <div id="loader" class="loader"></div>
+    <section class="h-screen w-full flex items-center justify-center bg-gray-900">
+        
+        <div class=" bg-gray-100 p-8 rounded-lg shadow-md max-w-md mx-auto">
+            <h1 class="text-3xl font-medium mb-6">Iniciar Sesión</h1>
+            <form id="loginForm" action="/signin-admin" method="POST">
+              <div class="mb-4">
+                <label for="email" class="block text-gray-700 font-medium mb-2">Correo:</label>
+                <input type="email" id="email" name="email" class="bg-gray-200 text-gray-700 border border-gray-300 rounded-lg py-2 px-4 focus:outline-none focus:border-blue-500 w-full" required />
+              </div>
+              <div class="mb-4">
+                <label for="password" class="block text-gray-700 font-medium mb-2">Contraseña:</label>
+                <input type="password" id="password" name="password" class="bg-gray-200 text-gray-700 border border-gray-300 rounded-lg py-2 px-4 focus:outline-none focus:border-blue-500 w-full" required />
+              </div>
+
+              <button type="submit" class="bg-blue-500 hover:bg-blue-700 text-white font-medium py-2 px-4 rounded-lg focus:outline-none focus:shadow-outline">Iniciar Sesión</button>
+            </form>
+          </div>
+    </section>
+    <section>
+
+    </section>
+    <style>
+        .loader {
+            border: 16px solid #f3f3f3;
+            border-top: 16px solid #3498db;
+            border-radius: 50%;
+            width: 120px;
+            height: 120px;
+            animation: spin 2s linear infinite;
+            display: none; /* Ocultar inicialmente */
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            z-index: 9999;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+    </style>
+        <script>
+            const loader = document.getElementById('loader');
+            const loginForm = document.getElementById('loginForm');
+    
+            loginForm.addEventListener('submit', function() {
+                loader.style.display = 'block'; // Mostrar pantalla de carga al enviar el formulario
+            });
+        </script>
+    <script>
+        // Función para obtener el valor de un parámetro de consulta en la URL
+        function getQueryParam(name) {
+            const urlParams = new URLSearchParams(window.location.search);
+            return urlParams.get(name);
+        }
+    
+        // Mostrar la alerta si el inicio de sesión no fue exitoso
+        window.onload = function() {
+            const error = getQueryParam('error');
+            if (error) {
+                const alertElement = document.getElementById('alert');
+                alertElement.textContent = 'El inicio de sesión no fue exitoso. Por favor, verifica tus credenciales e intenta nuevamente.';
+                alertElement.classList.remove('hidden');
+                setTimeout(()=>{
+                    alertElement.classList.toggle('hidden');
+                },3000)
+            }
+        };
+    </script>
+</body>
+</html>

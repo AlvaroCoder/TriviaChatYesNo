@@ -14,14 +14,14 @@ const ejs = require('ejs');
 const { createdAtTimeStamp } = require('./utils/dateFormatter');
 
 const firebaseConfig = {
-    apiKey: "AIzaSyBI9IxAtUfAVxFcUs1uTbOF86ChtSNypsE",
-    authDomain: "triviachatapp.firebaseapp.com",
-    projectId: "triviachatapp",
-    storageBucket: "triviachatapp.appspot.com",
-    messagingSenderId: "98171997455",
-    appId: "1:98171997455:web:aee71235655f4212fcc27a",
-    measurementId: "G-Z8R8M1LRVE",
-    databaseURL : "https://triviachatapp-default-rtdb.firebaseio.com/",
+    apiKey: process.env.FIREBASE_APIKEY,
+    authDomain: process.env.FIREBASE_AUTHDOMAIN,
+    projectId: process.env.FIREBASE_PROJECTID,
+    storageBucket: process.env.FIREBASE_STORAGEBUCKET,
+    messagingSenderId: process.env.FIREBASE_MESSAGINGSENDERID,
+    appId: process.env.FIREBASE_APPID,
+    measurementId: process.env.FIREBASE_MEASUREMENTID,
+    databaseURL : process.env.FIREBASE_DATABASE_URL,
 };
   
 const appFirebase = initializeApp(firebaseConfig);

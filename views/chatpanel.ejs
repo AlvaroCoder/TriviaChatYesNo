@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chat</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+</head>
+<body class="bg-gray-200">
+    <div class="flex flex-col h-screen">
+        <!-- Mensajes del chat -->
+        <div class="flex-1 overflow-y-auto px-4 py-2">
+            <div id="contenedorPregunta" class="w-full h-16 shadow-lg">
+                <h1 class="font-bold text-2xl"><%= data.nombrePregunta %></h1>
+                <div class="flex-1 flex justify-center items-center">
+                    <img class="object-contain" src="<%= data.imagen %>" />
+                </div>                
+            </div>
+            <div id="contenedorChat" class="flex flex-col">
+            </div>
+        </div>
+        <!-- Barra de entrada de mensaje -->
+        <div class="bg-white p-4">
+            <div class="flex">
+                <input type="text" class="flex-1 border border-gray-300 rounded-lg px-4 py-2 mr-2 focus:outline-none" placeholder="Escribe tu mensaje...">
+                <button id="enviarMensaje" class="bg-blue-500 text-white px-4 py-2 rounded-lg">Enviar</button>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

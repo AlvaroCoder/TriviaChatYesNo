@@ -44,34 +44,25 @@
             <section class="py-4 w-full">
                 <div class="w-full h-16 flex flex-row justify-between items-center">
                     <div class="py-2 px-4">
-                        <h2 class="block text-2xl font-bold mb-4">Preguntas</h2>
+                        <h2 class="block text-2xl font-bold mb-4">Usuarios</h2>
                     </div>
                     <div class="my-2">
-                        <input placeholder="Buscar pregunta .." class="bg-gray-200 text-gray-700 border border-gray-300 rounded-lg py-2 px-4 focus:outline-none focus:border-blue-500 w-full" />
+                        <input placeholder="Buscar Usuario .." class="bg-gray-200 text-gray-700 border border-gray-300 rounded-lg py-2 px-4 focus:outline-none focus:border-blue-500 w-full" />
                     </div>
-                    <button id="btnAgregarPregunta" class="py-2 px-4 rounded-xl bg-gray-800 text-white">
-                        Agregar Pregunta
-                    </button>
                 </div>
                 <div class="overflow-x-auto mt-6">
                     <table class="table-auto border-collapse w-full mb-4">
                         <thead class="sticky top-0 ">
                             <tr>
-                                <th class="border px-4 py-2">N°</th>
-                                <th class="border px-4 py-2">Nombre</th>
-                                <th class="border px-4 py-2">Respuesta</th>
+                                <th class="border px-4 py-2">Usuario</th>
                                 <th class="border px-4 py-2">Imagen</th>
-                                <th class="border px-4 py-2">Fecha de Creación</th>
                             </tr>
                         </thead>
                         <tbody class="tabla-scroll">
                             <% data.forEach(function(item, indice) { %>
                                 <tr>
-                                    <td class="border px-4 py-2"><%= indice+1%></td>
-                                    <td class="border px-4 py-2"><%= item.nombrePregunta %></td>
-                                    <td class="border px-4 py-2"><%= item.respuesta %></td>
-                                    <td class="border px-4 py-2"><img src="<%= item.imagen %>" alt="Imagen" class="w-16 h-16"></td>
-                                    <td class="border px-4 py-2"><%= item.fechaCreacion %></td>
+                                    <td class="border px-4 py-2"><%= item.usuario %></td>
+                                    <td class="border px-4 py-2"><img src="<%= item.avatar %>" alt="Imagen" class="w-16 h-16"></td>
                                 </tr>
                             <% }); %>
                         </tbody>
@@ -79,32 +70,7 @@
                 </div>
             </section>
         </div>
-                    <!-- Modal para agregar pregunta -->
-        <div id="modalAgregarPregunta"
-            class="hidden fixed top-0 left-0 w-full h-full bg-gray-900 bg-opacity-50 flex justify-center items-center">
-            <div class="bg-white p-8 rounded-lg w-1/2">
-                <h2 class="text-xl font-bold mb-4">Agregar Pregunta</h2>
-                <form method="POST" action="/save-question" id="saveQuestionForm">
-                    <div class="mb-4">
-                        <label for="nombrePregunta" class="block text-gray-700 font-bold mb-2">Nombre de la pregunta:</label>
-                        <input type="text" id="nombrePregunta" name="nombrePregunta"
-            class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" required>
-                    </div>
-                    <div class="mb-4">
-                        <label for="respuesta" class="block text-gray-700 font-bold mb-2">Respuesta:</label>
-                        <input type="text" id="respuesta" name="respuesta"
-            class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" required>
-                    </div>
-                    <div class="mb-4">
-                        <label for="imagen" class="block text-gray-700 font-bold mb-2">Enlace de la imagen:</label>
-                        <input type="text" id="imagen" name="imagen"
-            class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" required>
-                    </div>
-                    <button type="submit"
-                        class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">Guardar</button>
-                </form>
-            </div>
-        </div>
+
     </div>
     <!-- Mensaje flotante -->
     <% if (typeof exito !== 'undefined') { %>

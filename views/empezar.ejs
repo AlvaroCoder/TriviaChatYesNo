@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Formulario de Usuario</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <style>
+        .hidden {
+            display: none;
+        }
+        .selected {
+            border: 2px solid #00ff00;
+        }
+    </style>
+</head>
+<body class="bg-gray-100 flex justify-center items-center h-screen">
+    <div class="w-full max-w-md">
+        <h1 class="text-2xl mb-4 text-center">Ingresa tu nombre de usuario</h1>
+        <form action="/registrar-competidor" method="POST" class="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4">
+            <div class="mb-4">
+                <input type="text" name="username" placeholder="Nombre de Usuario" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
+            </div>
+            <div class="flex items-center justify-center">
+                <input type="button" value="Continuar" onclick="showAvatarSelection()" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">
+            </div>
+        </form>
+        <div id="avatarSelection" class="hidden mt-4">
+            <h2 class="text-lg mb-2">Escoge tu avatar</h2>
+            <div class="grid grid-cols-3 gap-4">
+                <img src="https://res.cloudinary.com/dabyqnijl/image/upload/v1707175836/Avatars/9439685_aeoxvl.jpg" alt="Avatar 1" class="avatar rounded-sm cursor-pointer" onclick="selectAvatar(this)">
+                <img src="https://res.cloudinary.com/dabyqnijl/image/upload/v1707175787/Avatars/9306614_ux9zus.jpg" alt="Avatar 2" class="avatar rounded-sm cursor-pointer" onclick="selectAvatar(this)">
+                <img src="https://res.cloudinary.com/dabyqnijl/image/upload/v1707175834/Avatars/9442242_utjrbc.jpg" alt="Avatar 3" class="avatar rounded-sm cursor-pointer" onclick="selectAvatar(this)">
+                <img src="https://res.cloudinary.com/dabyqnijl/image/upload/v1707175818/Avatars/7294793_weltfa.jpg" alt="Avatar 3" class="avatar rounded-sm cursor-pointer" onclick="selectAvatar(this)">
+                <img src="https://res.cloudinary.com/dabyqnijl/image/upload/v1707168634/Avatars/9439767_e2kx9y.jpg" alt="Avatar 3" class="avatar rounded-sm cursor-pointer" onclick="selectAvatar(this)">
+                <img src="https://res.cloudinary.com/dabyqnijl/image/upload/v1707157891/Avatars/9440461_cy8d5h.jpg" alt="Avatar 3" class="avatar rounded-sm cursor-pointer" onclick="selectAvatar(this)">
+
+            </div>
+            <div class="flex justify-center mt-4">
+                <button onclick="acceptAvatar()" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">Aceptar</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function showAvatarSelection() {
+            document.getElementById('avatarSelection').classList.remove('hidden');
+        }
+
+        function selectAvatar(element) {
+            const avatars = document.querySelectorAll('.avatar');
+            avatars.forEach(avatar => {
+                avatar.classList.remove('selected');
+            });
+            element.classList.add('selected');
+        }
+
+        function acceptAvatar() {
+        const selectedAvatar = document.querySelector('.selected');
+        const username = document.querySelector('input[name="username"]').value;
+        if (selectedAvatar && username) {
+            const formData = new FormData();
+            formData.append('username', username);
+            formData.append('avatar', selectedAvatar.src); 
+
+            fetch('/registrar-competidor', {
+                method: 'POST',
+                body: formData
+            })
+            .then(response => {
+                if (response.ok) {
+                    console.log('Datos enviados correctamente');
+                    // Puedes redirigir a una página de confirmación o realizar otras acciones aquí
+                    window.location.href="/jugar"
+                } else {
+                    console.error('Error al enviar los datos');
+                }
+            })
+            .catch(error => {
+                console.error('Error en la solicitud:', error);
+            });
+        } else {
+            alert('Por favor, selecciona un avatar y proporciona un nombre de usuario.');
+        }
+    }
+    </script>
+</body>
+</html>
